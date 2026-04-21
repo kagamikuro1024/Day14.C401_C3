@@ -5,9 +5,16 @@ import sys
 import codecs
 import time
 
-# Sửa lỗi Unicode trên Windows
+# Sửa lỗi Unicode trên Windows triệt để
 if sys.stdout.encoding != 'utf-8':
-    sys.stdout = codecs.getwriter('utf-8')(sys.stdout.detach())
+    try:
+        sys.stdout = codecs.getwriter('utf-8')(sys.stdout.detach())
+    except:
+        pass
+
+# Đảm bảo thư mục báo cáo tồn tại trước khi chạy (Tránh mất token nếu lỗi ghi file cuối cùng)
+os.makedirs("reports", exist_ok=True)
+print("[*] Reports directory ready.", flush=True)
 
 # Đảm bảo các module bên trong agent/ có thể tìm thấy nhau
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "agent"))
@@ -17,18 +24,18 @@ from engine.llm_judge import LLMJudge
 from main_agent import MainAgent
 
 async def run_benchmark_with_results(agent_version: str):
-    print(f"\n[*] Khoi dong Benchmark cho {agent_version}...")
+    print(f"\n[*] Khoi dong Benchmark cho {agent_version}...", flush=True)
 
     # 1. Load Dataset
     if not os.path.exists("data/golden_set.jsonl"):
-        print("[-] Thieu data/golden_set.jsonl. Hay chay 'python data/synthetic_gen.py' va 'python data/enrich_retrieval_ids.py' truoc.")
+        print("[-] Loi: Thieu data/golden_set.jsonl. Hay chay enrichment truoc.")
         return None, None
 
     with open("data/golden_set.jsonl", "r", encoding="utf-8") as f:
         dataset = [json.loads(line) for line in f if line.strip()]
 
     if not dataset:
-        print("❌ File data/golden_set.jsonl rỗng.")
+        print("[-] Loi: File dataset rong.")
         return None, None
 
     # 2. Khởi tạo Pipeline thực tế
@@ -36,11 +43,10 @@ async def run_benchmark_with_results(agent_version: str):
     judge = LLMJudge()
     runner = BenchmarkRunner(agent, judge)
     
-    # 3. Chạy toàn bộ (Batch Size 5 để đảm bảo an toàn với Rate Limit)
+    # 3. Chạy toàn bộ (Batch Size 5 - an toàn tránh rate limit)
     results = await runner.run_all(dataset, batch_size=5)
 
     # 4. Tính toán Metrics tổng hợp
-    total = len(results)
     valid_results = [r for r in results if r.get("status") != "error"]
     total_valid = len(valid_results)
     
@@ -52,14 +58,12 @@ async def run_benchmark_with_results(agent_version: str):
     avg_mrr = sum(r["retrieval"]["mrr"] for r in valid_results) / total_valid
     avg_lat = sum(r["latency"] for r in valid_results) / total_valid
     total_cost = sum(r.get("cost_usd", 0) for r in valid_results)
-    
-    # Tính độ đồng thuận trung bình (Agreement Rate)
     avg_agreement = sum(r["judge"]["agreement_rate"] for r in valid_results) / total_valid
 
     summary = {
         "metadata": {
             "version": agent_version,
-            "total_cases": total,
+            "total_cases": len(results),
             "valid_cases": total_valid,
             "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
         },
@@ -78,17 +82,14 @@ async def run_benchmark_with_results(agent_version: str):
     return results, summary
 
 async def main():
-    # Trong môi trường Lab, chúng ta sẽ so sánh bản hiện tại (V2) với một Baseline giả định (V1)
-    # Nếu bạn có kết quả V1 thực tế, hãy load từ file.
     v1_baseline_score = 3.8
-    
     v2_results, v2_summary = await run_benchmark_with_results("Agent_V2_Production")
     
     if not v2_summary:
-        print("❌ Lỗi: Không thể tạo báo cáo benchmark.")
+        print("[-] Loi: Khong the tao bao cao benchmark.")
         return
 
-    # --- RELEASE GATE LOGIC ---
+    # --- RELEASE GATE LOGIC (Standard ASCII) ---
     print("\n" + "="*50)
     print("--- KET QUA SO SANH & RELEASE GATE ---")
     print(f"V1 Baseline Score: {v1_baseline_score}")
@@ -120,11 +121,12 @@ async def main():
     with open("reports/benchmark_results.json", "w", encoding="utf-8") as f:
         json.dump(v2_results, f, ensure_ascii=False, indent=2)
     
-    print(f"\n[OK] Reports saved to 'reports/' directory.")
+    print(f"\n[DONE] Reports successfully saved to 'reports/' directory.")
 
 if __name__ == "__main__":
-    # Tăng limit cho asyncio loop nếu cần
-    asyncio.run(main())
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        asyncio.run(main())
+    except KeyboardInterrupt:
+        print("\n[!] Benchmark interrupted by user.")
+    except Exception as e:
+        print(f"\n[!] Fatal error: {str(e)}")

@@ -26,6 +26,14 @@ class RetrievalEvaluator:
                 return 1.0 / (i + 1)
         return 0.0
 
+    def evaluate(self, retrieved_ids: List[str], expected_ids: List[str]) -> Dict:
+        """Tính toán cả Hit Rate và MRR trong một lần gọi."""
+        return {
+            "hit_rate": self.calculate_hit_rate(expected_ids, retrieved_ids, top_k=3),
+            "mrr": self.calculate_mrr(expected_ids, retrieved_ids),
+            "retrieved_ids": retrieved_ids[:3],
+        }
+
     async def evaluate_batch(self, dataset: List[Dict]) -> Dict:
         """
         Chạy eval cho toàn bộ bộ dữ liệu (không bắt buộc nếu dùng trong runner).

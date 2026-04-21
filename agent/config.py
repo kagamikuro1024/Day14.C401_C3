@@ -22,7 +22,7 @@ COURSE_INFO_PATH = KNOWLEDGE_BASE_DIR / "course_info.json"
 
 # --- OpenAI ---
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-LLM_MODEL = "gpt-4o"
+LLM_MODEL = "gpt-5.4-nano"
 LLM_TEMPERATURE = 0.3
 EMBEDDING_MODEL = "text-embedding-3-large"
 
