@@ -1,0 +1,167 @@
+{
+    "course_name": "Lập trình C/C++ cơ bản",
+    "course_code": "CS101",
+    "semester": "HK2 2025-2026",
+    "description": "Khóa học cung cấp kiến thức nền tảng về lập trình C/C++, bao gồm biến, kiểu dữ liệu, cấu trúc điều khiển, hàm, mảng, chuỗi, con trỏ, struct và file I/O.",
+    "instructor": {
+        "name": "ThS. Nguyễn Văn Minh",
+        "email": "minh.nv@university.edu.vn",
+        "office_hours": "Thứ 3 và Thứ 5, 14:00 - 16:00",
+        "office": "Phòng A305, Tòa nhà CNTT"
+    },
+    "teaching_assistants": [
+        {
+            "name": "Trần Thị Hoa",
+            "email": "hoa.tt@university.edu.vn",
+            "role": "TA chính",
+            "available": "Thứ 2 - Thứ 6, 18:00 - 21:00"
+        },
+        {
+            "name": "Lê Minh Tuấn",
+            "email": "tuan.lm@university.edu.vn",
+            "role": "TA phụ",
+            "available": "Thứ 7, 9:00 - 12:00"
+        }
+    ],
+    "schedule": {
+        "theory": {
+            "day": "Thứ 3",
+            "time": "8:00 - 10:00",
+            "room": "Giảng đường B201",
+            "note": "2 tiết lý thuyết"
+        },
+        "lab": {
+            "day": "Thứ 5",
+            "time": "13:00 - 16:00",
+            "room": "Phòng máy C102",
+            "note": "3 tiết thực hành"
+        }
+    },
+    "syllabus": [
+        {"week": 1, "topic": "Giới thiệu C/C++, Cài đặt môi trường", "chapter": 1},
+        {"week": 2, "topic": "Biến, Kiểu dữ liệu, Nhập xuất", "chapter": 2},
+        {"week": 3, "topic": "Toán tử, Biểu thức", "chapter": 2},
+        {"week": 4, "topic": "Câu lệnh điều kiện (if, switch)", "chapter": 3},
+        {"week": 5, "topic": "Vòng lặp (for, while, do-while)", "chapter": 3},
+        {"week": 6, "topic": "Hàm — Khai báo, Tham số, Return", "chapter": 4},
+        {"week": 7, "topic": "Hàm — Đệ quy", "chapter": 4},
+        {"week": 8, "topic": "Kiểm tra giữa kỳ", "chapter": "1-4"},
+        {"week": 9, "topic": "Mảng 1 chiều, 2 chiều", "chapter": 5},
+        {"week": 10, "topic": "Chuỗi ký tự", "chapter": 5},
+        {"week": 11, "topic": "Con trỏ — Cơ bản", "chapter": 6},
+        {"week": 12, "topic": "Con trỏ — Cấp phát động", "chapter": 6},
+        {"week": 13, "topic": "Struct, Typedef, Enum", "chapter": 7},
+        {"week": 14, "topic": "File I/O", "chapter": 8},
+        {"week": 15, "topic": "Ôn tập tổng hợp", "chapter": "1-8"},
+        {"week": 16, "topic": "Thi cuối kỳ", "chapter": "1-8"}
+    ],
+    "grading": {
+        "components": {
+            "attendance": {"weight": 10, "description": "Điểm danh, tham gia lớp. Vắng 1 buổi trừ 3 điểm vào cột này. Vắng quá 3 buổi không phép = cấm thi."},
+            "weekly_assignments": {"weight": 20, "description": "Bài tập hàng tuần (độ khó thấp, kiến thức cơ bản)"},
+            "labs": {"weight": 20, "description": "Bài tập thực hành trong giờ lab (độ khó trung bình)"},
+            "projects": {"weight": 20, "description": "Dự án lập trình (độ khó cao, áp dụng kiến thức)"},
+            "midterm": {"weight": 15, "description": "Kiểm tra giữa kỳ (tuần 8, 90 phút, viết tay)"},
+            "final": {"weight": 15, "description": "Thi cuối kỳ (tuần 16, 120 phút, viết tay + máy)"}
+        },
+        "note": "Điểm 10/10 cho mỗi bài. Điểm trung bình = tổng/số bài × 10. Điểm lớp = tổng điểm × weight tương ứng"
+    },
+    "assessment_types": {
+        "weekly_assignments": {
+            "description": "Bài tập hàng tuần (tuần 2-7, 15)",
+            "frequency": "1 bài/tuần",
+            "submission": "Nộp trên LMS trước 23:59 thứ 7 tuần đó",
+            "grading": "0-10 điểm, được phép sửa và nộp lại trong vòng 48h",
+            "weight_in_component": 100,
+            "deadline_policy": "Trừ 1 điểm/ngày trễ, max 3 ngày"
+        },
+        "labs": {
+            "description": "Bài tập thực hành trong giờ lab",
+            "frequency": "Tất cả các buổi từ tuần 2-14",
+            "submission": "Hoàn thành tại lớp, hỗ trợ hoàn thành sau tính từ 48h tiếp theo",
+            "grading": "0-10 điểm, dựa trên tính đúng đắn code và mã hóa",
+            "weight_in_component": 100,
+            "deadline_policy": "Trễ tính từ sau 48h, trừ 5 điểm toàn bộ"
+        },
+        "projects": {
+            "count": 3,
+            "project_1": {
+                "title": "Quản lý sinh viên (Arrays, Structs)",
+                "deadline": "2026-03-30",
+                "max_points": 10,
+                "submission_link": "LMS > Assignments > Project 1"
+            },
+            "project_2": {
+                "title": "Quản lý tài sản ngân hàng (Pointers, Dynamic Memory)",
+                "deadline": "2026-04-27",
+                "max_points": 10,
+                "submission_link": "LMS > Assignments > Project 2"
+            },
+            "project_3": {
+                "title": "Hệ thống quản lý file (File I/O, Streams)",
+                "deadline": "2026-05-20",
+                "max_points": 10,
+                "submission_link": "LMS > Assignments > Project 3"
+            },
+            "grading_rubric": {
+                "functionality": "40% - Chương trình chạy đúng?",
+                "code_quality": "30% - Mã sạch, có comment?",
+                "documentation": "20% - README, hướng dùng?",
+                "creativity": "10% - Có tính năng bổ sung?"
+            },
+            "deadline_policy": "Trừ 10% mỗi ngày trễ, max 5 ngày. Sau 5 ngày = 0 điểm"
+        },
+        "midterm": {
+            "date": "2026-04-01",
+            "time": "8:00 - 9:30 (90 phút)",
+            "location": "Giảng đường B201",
+            "scope": "Chương 1-4 (Biến, Toán tử, Điều kiện, Hàm)",
+            "format": "Viết tay, không được phép dùng tài liệu",
+            "grading": "0-10 điểm",
+            "note": "Vắng không phép = 0. Vắng có phép: liên hệ TA trong 48h"
+        },
+        "final": {
+            "date": "2026-05-25",
+            "time": "9:00 - 11:00 (120 phút)",
+            "location": "Giảng đường B201",
+            "scope": "Chương 1-8 (Toàn bộ nội dung)",
+            "format": "Viết tay + Máy tính (phần coding)",
+            "grading": "0-10 điểm",
+            "note": "Vắng không phép = 0. Vắng có phép: liên hệ TA trong 48h"
+        }
+    },
+    "resources": {
+        "textbook": "The C Programming Language — Brian W. Kernighan, Dennis M. Ritchie (K&R)",
+        "references": [
+            "C Programming: A Modern Approach — K. N. King",
+            "C++ Primer — Stanley B. Lippman",
+            "Head First C — David Griffiths"
+        ],
+        "online": [
+            {"name": "Learn C", "url": "https://www.learn-c.org/"},
+            {"name": "CPlusPlus", "url": "https://cplusplus.com/"},
+            {"name": "GeeksforGeeks C", "url": "https://www.geeksforgeeks.org/c-programming-language/"},
+            {"name": "CS50 (Harvard)", "url": "https://cs50.harvard.edu/"},
+            {"name": "W3Schools C", "url": "https://www.w3schools.com/c/"}
+        ],
+        "tools": [
+            {"name": "VS Code", "url": "https://code.visualstudio.com/", "note": "IDE khuyến nghị"},
+            {"name": "MSYS2/MinGW", "url": "https://www.msys2.org/", "note": "Compiler cho Windows"},
+            {"name": "Online GDB", "url": "https://www.onlinegdb.com/", "note": "IDE online, không cần cài đặt"}
+        ],
+        "lms": "https://lms.university.edu.vn/course/CS101"
+    },
+    "policies": {
+        "late_submission": "Trừ 10% mỗi ngày trễ, tối đa 3 ngày",
+        "plagiarism": "Bài tập phải tự làm. Phát hiện sao chép sẽ nhận 0 điểm cho cả 2 bên.",
+        "absence": "Vắng 1 buổi trừ 3 điểm chuyên cần. Vắng quá 3 buổi không phép sẽ bị cấm thi cuối kỳ.",
+        "communication": "Sử dụng group chat Zalo/Telegram của lớp để hỏi đáp. Câu hỏi cá nhân gửi email cho TA."
+    },
+    "important_dates": {
+        "start": "2026-02-10",
+        "midterm": "2026-04-01",
+        "project_deadline": "2026-05-15",
+        "final_exam": "2026-05-25",
+        "end": "2026-05-30"
+    }
+}
