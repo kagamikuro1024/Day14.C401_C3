@@ -11,7 +11,7 @@
 Nghĩa chịu trách nhiệm tạo **bộ dữ liệu kiểm tra thủ công (Golden Dataset)** cho hệ thống benchmark. Đây là bước nền tảng cực kỳ quan trọng — không cần viết code phức tạp, chủ yếu tạo dữ liệu chất lượng cao.
 
 **Mục tiêu cụ thể:**
-- Tạo ít nhất **10 test cases thủ công** với chất lượng cao
+- Tạo **60 test cases thủ công** với chất lượng cao
 - Format chuẩn JSONL để hệ thống đọc được
 - Bao gồm đủ các loại câu hỏi
 
@@ -102,12 +102,12 @@ print(f'✅ Kiểm tra thành công! Tổng: {count} test cases')
 git add data/golden_set.jsonl
 
 # Commit với message chuẩn
-git commit -m "feat: tạo 10 test cases thủ công cho golden dataset
+git commit -m "feat: tạo 60 test cases thủ công cho golden dataset
 
-- 5 câu factual (con trỏ, mảng, vòng lặp, printf, deadline)
-- 2 câu debug (segmentation fault, struct vs class)
-- 2 câu adversarial (ngoài phạm vi, vi phạm học thuật)
-- 1 câu về grading policy"
+- 15 câu factual (con trỏ, mảng, vòng lặp, printf, deadline)
+- 15 câu debug (segmentation fault, struct vs class)
+- 15 câu adversarial (ngoài phạm vi, vi phạm học thuật)
+- 15 câu về grading policy"
 
 # Push lên remote
 git push origin feature/nghia-golden-dataset
