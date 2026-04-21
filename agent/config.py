@@ -5,7 +5,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+# Load .env theo thứ tự: thư mục agent/ trước, rồi thư mục root Lab14
+# Để API key ở root Lab14 có thể ghi đè key cũ trong agent/.env
+_ROOT_ENV = Path(__file__).parent.parent / ".env"
+load_dotenv(_ROOT_ENV)   # Root Lab14 (.env mới nhất)
+load_dotenv(override=False)  # agent/.env (chỉ nếu chưa có key)
 
 # --- Paths ---
 BASE_DIR = Path(__file__).parent
@@ -23,9 +27,9 @@ LLM_TEMPERATURE = 0.3
 EMBEDDING_MODEL = "text-embedding-3-large"
 
 # --- RAG ---
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
-RETRIEVAL_K = 5  # Number of documents to retrieve
+CHUNK_SIZE = 512       # Giảm từ 1000 → embedding tập trung hơn, ít bị loãng
+CHUNK_OVERLAP = 128    # ~25% overlap — đủ context bridge mà không thừa
+RETRIEVAL_K = 6        # Tăng nhẹ để bù cho chunk nhỏ hơn
 
 # --- Course ---
 COURSE_NAME = "Lập trình C/C++ cơ bản"

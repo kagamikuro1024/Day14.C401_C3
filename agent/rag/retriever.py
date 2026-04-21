@@ -43,27 +43,50 @@ def search_documents(
     query: str,
     k: int = config.RETRIEVAL_K,
     source_type: str = None,
+    score_threshold: float = None,
 ) -> list[Document]:
     """
     Tìm tài liệu liên quan nhất trong knowledge base.
+
+    Cải tiến so với phiên bản cũ:
+    - Thêm score_threshold để lọc kết quả có similarity quá thấp
+    - FAISS dùng L2 distance: giá trị nhỏ hơn = tốt hơn
+    - Khi score_threshold=None: trả về top-k như bình thường (backward-compatible)
 
     Args:
         query: Câu hỏi cần tìm
         k: Số lượng tài liệu trả về
         source_type: Lọc theo loại (slide, faq, code_sample)
+        score_threshold: Ngưỡng L2 distance tối đa (None = không lọc)
+                         Dưới 0.3: rất gần, Dưới 0.5: liên quan, Trên 0.8: ít liên quan
 
     Returns:
         Danh sách Document với nội dung liên quan
     """
     store = load_vector_store()
 
-    if source_type:
-        filter_dict = {"source_type": source_type}
-        results = store.similarity_search(query, k=k, filter=filter_dict)
-    else:
-        results = store.similarity_search(query, k=k)
+    # Lấy nhiều hơn nếu có filter (để bù sau khi lọc)
+    fetch_k = k * 3 if (source_type or score_threshold) else k
 
-    return results
+    results_with_scores = store.similarity_search_with_score(query, k=fetch_k)
+
+    # Lọc theo source_type nếu có
+    if source_type:
+        results_with_scores = [
+            (doc, score) for doc, score in results_with_scores
+            if doc.metadata.get("source_type") == source_type
+        ]
+
+    # Lọc theo score threshold nếu có (L2 distance nhỏ = tốt hơn)
+    if score_threshold is not None:
+        results_with_scores = [
+            (doc, score) for doc, score in results_with_scores
+            if score <= score_threshold
+        ]
+
+    # Sắp xếp theo score tăng dần (nhỏ hơn = tốt hơn) và giới hạn k kết quả
+    results_with_scores.sort(key=lambda x: x[1])
+    return [doc for doc, _ in results_with_scores[:k]]
 
 
 def search_with_scores(
