@@ -1,3 +1,8 @@
+## Họ tên: Trịnh Xuân Đạt
+## Mã số sinh viên: 2A202600326
+## Lớp: C401-C3
+## Reflection: Synthetic Data Generation for LLM Evaluation
+
 ## Những gì đã làm
 - Implement data/synthetic_gen.py với real GPT-4o API call
 - Tạo 50+ test cases từ knowledge_base khóa học
