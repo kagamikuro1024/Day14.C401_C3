@@ -10,9 +10,8 @@ import asyncio
 import sys
 import os
 
-# Đảm bảo import được package agent
-sys.path.insert(0, os.path.dirname(__file__))
-
+# Import directly from the module 'agent' (agent.py)
+import agent
 from agent import chat
 from rag.retriever import search_documents
 

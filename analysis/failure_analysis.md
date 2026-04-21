@@ -1,31 +1,42 @@
-# Báo cáo Phân tích Thất bại (Failure Analysis Report)
+# Failure Analysis — Lab 14 Benchmarking
 
-## 1. Tổng quan Benchmark
-- **Tổng số cases:** 50
-- **Tỉ lệ Pass/Fail:** X/Y
-- **Điểm RAGAS trung bình:**
-    - Faithfulness: 0.XX
-    - Relevancy: 0.XX
-- **Điểm LLM-Judge trung bình:** X.X / 5.0
+## 📊 Evaluation Summary
+*Tóm tắt kết quả từ reports/summary.json*
+- **Total Cases:** 162
+- **Pass Rate:** XX%
+- **Avg Score:** X.X/5.0
+- **Hit Rate @3:** 0.XX
+- **MRR:** 0.XX
 
-## 2. Phân nhóm lỗi (Failure Clustering)
-| Nhóm lỗi | Số lượng | Nguyên nhân dự kiến |
-|----------|----------|---------------------|
-| Hallucination | 5 | Retriever lấy sai context |
-| Incomplete | 3 | Prompt quá ngắn, không yêu cầu chi tiết |
-| Tone Mismatch | 2 | Agent trả lời quá suồng sã |
+---
 
-## 3. Phân tích 5 Whys (Chọn 3 case tệ nhất)
+## 🔍 Deep Dive: Root Cause Analysis (5 Whys)
 
-### Case #1: [Mô tả ngắn]
-1. **Symptom:** Agent trả lời sai về...
-2. **Why 1:** LLM không thấy thông tin trong context.
-3. **Why 2:** Vector DB không tìm thấy tài liệu liên quan nhất.
-4. **Why 3:** Chunking size quá lớn làm loãng thông tin quan trọng.
-5. **Why 4:** ...
-6. **Root Cause:** Chiến lược Chunking không phù hợp với dữ liệu bảng biểu.
+*Chọn ra 1-2 cases "Worst" (điểm thấp nhất) để phân tích sâu.*
 
-## 4. Kế hoạch cải tiến (Action Plan)
-- [ ] Thay đổi Chunking strategy từ Fixed-size sang Semantic Chunking.
-- [ ] Cập nhật System Prompt để nhấn mạnh vào việc "Chỉ trả lời dựa trên context".
-- [ ] Thêm bước Reranking vào Pipeline.
+### Case #1: [Tóm tắt câu hỏi]
+- **Symptom:** Agent trả lời sai/thiếu thông tin/hallucination.
+- **Why 1:** Tại sao Agent trả lời sai?
+  - *Ví dụ: Vì RAG không tìm được tài liệu liên quan.*
+- **Why 2:** Tại sao RAG không tìm được tài liệu?
+  - *Ví dụ: Vì câu hỏi chứa thuật ngữ không có trong index.*
+- **Why 3:** Tại sao thuật ngữ đó không có trong index?
+  - *Ví dụ: Vì chúng ta chunk quá nhỏ làm mất tính ngữ nghĩa (semantic context).*
+- **Why 4:** Tại sao chunk quá nhỏ?
+  - *Ví dụ: Vì config.py đặt CHUNK_SIZE=512 để tối ưu latency.*
+- **Why 5 (Root Cause):** Gốc rễ vấn đề là gì?
+  - *Ví dụ: Thiếu bước Keyword Extraction hoặc HyDE để mở rộng câu hỏi trước khi search.*
+
+---
+
+## 💡 Retrieval vs. Answer Quality Correlation
+*Giải trình sự liên quan giữa chất lượng Retrieval và chất lượng câu trả lời (Tiêu chí Rubric).*
+
+- **Phân tích:** Khi Hit Rate giảm xuống dưới X%, điểm Accuracy của Judge thường giảm theo tỉ lệ thuận Y%...
+- **Kết luận:** RAG là "móng nhà", nếu RAG tìm sai thì LLM Judge dù thông minh đến đâu cũng không thể cứu được câu trả lời.
+
+---
+
+## 🛠️ Action Plan cho V3
+1. ...
+2. ...
